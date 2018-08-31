@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Js tutorial</title>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <p v-bind:title="message"> {{message}}</p>
+
+        <h3>List of available fruits are as follows</h3>
+
+        <ul>
+            <li v-if="fruit.available" v-for="fruit in fruits">{{fruit.name | toUpperCase }}</li>
+        </ul>
+
+        <span v-html="rawHtml"></span>
+
+        Expression: {{exp + 1}} Conditional:
+        <!-- v-if can be used with else condition -->
+        <span v-if="isVisible">v-if directive</span>
+        <br /> List:
+        <span v-for="n in 10">{{n}}</span>
+        <span v-text="message"></span>
+        <br>
+        <!-- v-show set display:none-->
+        <span v-show="show">This will displayed when show is true</span>
+        <br>
+        <span v-pre>{{ this will not be compiled }}</span>
+
+
+        <!-- conditional rendering-->
+
+        <div v-if="Math.random() > 0.5">
+            Now you see me
+        </div>
+
+        <div v-else>
+            If random value is less than 0.5 I will get displayed
+        </div>
+
+
+        <div v-if="type === 'A'">
+            A
+        </div>
+        <div v-else-if="type === 'B'">
+            B
+        </div>
+        <div v-else-if="type === 'C'">
+            C
+        </div>
+        <div v-else>
+            Not A/B/C
+        </div>
+
+        <!-- loops in vue-->
+        <ul>
+            <li v-for="item in items" :key="item.id">{{item.title}}</li>
+        </ul>
+
+
+        <!-- @ is shorthand for v-on:click="hello" or @click="hello"-->
+        <!-- <input type="search" v-on:click="search", placeholder="Search"> -->
+
+        <!-- : is shortcut for v-bind-->
+        <!-- bind an attribute -->
+        <img v-bind:src="imageSrc">
+
+        <!-- shorthand -->
+        <img :src="imageSrc">
+
+        <style>
+            [v-cloak] {
+                /* background color will red, until the message get compiled in h1 tag */
+                background-color: red;
+            }
+        </style>
+        <h1 v-cloak>
+
+            {{ message }}
+        </h1>
+
+        <span v-once>This will never change: {{msg}}</span>
+
+        <div>
+            <!-- count implementation-->
+            <button @click="countUp">Count UP</button>
+            <button @click="countDown">Count Down</button>
+            count Value is:
+            <span>{{count}}</span>
+        </div>
+
+    </div>
+
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+
+            // Working with app data.
+            data: {
+                message: "Hello welcome to world of fruits and today is " + new Date().toLocaleString(),
+                fruits: [
+                    { name: "papaya", available: true, total: 100 },
+                    { name: "orange", available: true, total: 100 },
+                    { name: "guava", available: false, total: 100 },
+                    { name: "mango", available: false, total: 100 },
+                    { name: "pineapple", available: true, total: 100 },
+                ],
+                title: "vuejs",
+                exp: 2, // 
+                isVisible: false,
+                imageSrc: 'http://placehold.it/100x/100',
+
+                // display raw-html
+                rawHtml: '<b>Hello world </b>',
+                show: true,
+                type: "A",
+                items: [{ title: 'b', id: 3 }, { title: 'a', id: 1 }],
+                count: 0
+
+            },
+
+
+
+            // Working with methods
+            methods: {
+                countUp: function () {
+                    this.count += 1;
+                },
+
+                countDown: function () {
+                    this.count -= 1;
+                }
+            },
+
+
+            // working with computed
+
+            computed: {
+
+
+            },
+
+
+
+            //  template: ` <div>I will override all the contents inside app  </div>`,
+
+
+
+            // Working with extra vue stuff. 
+            created: function () {
+                console.log("Component created")
+            },
+
+            mounted: function () {
+                console.log("Mounted")
+            },
+
+            updated: function () {
+                console.log("updated")
+            },
+
+            destroyed: function () {
+                console.log("destroyed")
+            },
+
+            filters: {
+                toUpperCase: function (value) {
+                    return value.toUpperCase();
+                },
+
+                toLowerCase: function (value) {
+                    return value.toLowerCase();
+                }
+            }
+
+        });
+
+
+        // Checking global variables. 
+
+        console.log(app.title == "vuejs");
+
+        // vuejs special directices are accessed by prefixing $. 
+        // console.log(app.$data === data);
+
+        // fire the function when title get changed
+        app.$watch('title', function (newVal, oldVal) {
+        });
+
+
+
+    </script>
+
+
+</body>
+
+</html>
