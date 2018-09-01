@@ -1,0 +1,71 @@
+<!-- making todo list using vuejs -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Making todo list using vuejs</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+        .removed label {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <input type="text" name="addToDo" @keyup.enter="add" v-model="toDoItem" placeholder="Add your todo item.">
+        <button @click="add">Add todo</button>
+        <ul>
+            <li v-for="(todo, key) in todos" :class="{'removed': todo.done}">
+                <label :for="key">
+                    <input type="checkbox" v-model="todo.done" :id="key">{{todo.title}}</label>
+            </li>
+        </ul>
+    </div>
+
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                title: "TO Do app using vuejs",
+                todos: [
+                    { title: "Washing", done: false },
+                    { title: "Swimming", done: true },
+                    { title: "Sweeping", done: false },
+                    { title: "Go to gym", done: true }
+                ],
+                toDoItem: "",
+            },
+            methods: {
+                add: function () {
+                    var text = this.toDoItem.trim();
+
+                    if (text) {
+                        this.todos.push({
+                            title: text,
+                            done: false
+                        })
+                        this.toDoItem = " ";
+                    }
+                }
+
+            },
+            filters: {
+
+            },
+            computed: {
+
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

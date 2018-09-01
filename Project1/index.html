@@ -67,6 +67,12 @@
         </ul>
 
 
+        <!-- Disable button -->
+        <button v-bind:disabled="isButtonDisabled">Button</button>
+
+        <!-- submitting form -->
+        <form v-on:submit.prevent="onSubmit"> ... </form>
+
         <!-- @ is shorthand for v-on:click="hello" or @click="hello"-->
         <!-- <input type="search" v-on:click="search", placeholder="Search"> -->
 
@@ -98,10 +104,37 @@
             <span>{{count}}</span>
         </div>
 
+        <!-- Using custom vue component-->
+        <h3>List fruits using templates</h3>
+        <todo v-bind:todo="todo" v-for="todo in fruits" v-bind:key="todo.id"></todo>
+
     </div>
 
 
+    <!-- mounting vuejs independently     -->
+    <div id="app1"></div>
     <script>
+
+        const app1 = new Vue();
+        // When ready to mount app:
+        app.$mount('#app1');
+
+
+    </script>
+
+    <script>
+
+        // Defining component in vue
+        Vue.component('todo', {
+            props: ['todo'], // todo object get passed from <todo> tag
+            template: `
+            
+           <li>{{todo.name}}</li>
+           
+           `
+        });
+
+
         var app = new Vue({
             el: "#app",
 
@@ -144,10 +177,11 @@
 
 
             // working with computed
-
             computed: {
-
-
+                reversedMessage: function () {
+                    // `this` points to the vm instance
+                    return this.message.split('').reverse().join('')
+                }
             },
 
 
